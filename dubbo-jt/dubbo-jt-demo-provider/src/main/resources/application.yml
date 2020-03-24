@@ -1,0 +1,30 @@
+server:
+  port: 9000
+
+
+spring:
+  datasource:
+    #引入druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/jtdb?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    username: root
+    password: root
+ #springboot引入dubbo   
+dubbo:
+  scan:   #扫描包,让dubbo注解起作用@service
+    basePackages: com.jt
+  application:
+    name: provider-user #定义提供者的名称    不同的服务名称不同
+  registry:
+    address: zookeeper://192.168.83.174:2181?backup=192.168.83.174:2182,192.168.83.174:2183
+  protocol: #rpc调用   指定协议规则
+    name: dubbo  #引用dubbo协议,dubbo内部已经默认实现
+    port: 20880
+
+      
+mybatis-plus:
+  type-aliases-package: com.jt.dubbo.pojo       #配置别名包路径
+  mapper-locations: classpath:/mybatis/mappers/*.xml  #添加mapper映射文件
+  configuration:
+    map-underscore-to-camel-case: true                #开启驼峰映射规则
